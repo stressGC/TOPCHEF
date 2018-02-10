@@ -1,0 +1,31 @@
+{
+  "name": "top-chef-gc",
+  "version": "1.0.0",
+  "description": "node package responding to PW3 of web app development for ESILV. Using la fourchette & michelin APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "top-chef-gc"
+  },
+  "keywords": [
+    "esilv",
+    "pw3",
+    "top",
+    "chef",
+    "lafourchette",
+    "michelin"
+  ],
+  "author": "Georges Cosson",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.3",
+    "nunjucks": "^3.0.1",
+    "request": "^2.83.0"
+  }
+}

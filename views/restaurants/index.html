@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+	<h2>Liste des restaurants</h2>
+	<ul class="list-group">
+
+	{% for r in restaurants %}
+			<li class="list-group-item">
+				{{r.name}}, {{r.stars}} stars, price from {{r.price.min}} to {{r.price.max}}.
+			</li>
+	{% endfor %}
+
+	</ul>
+
+{% endblock %}
