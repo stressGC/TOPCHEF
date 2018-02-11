@@ -8,14 +8,19 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 var Restaurant = require("./models/Restaurant");
 
-launchScrapping();
+console.log(">>Launching scrapping script.");
+
+Restaurant.deleteMany({}).then(function (result) {
+	console.log(">>All previous documents have been deleted ("+result.n+" docs).");
+	launchScrapping();
+});
 
 function launchScrapping(){
 
 	var count = 1;
 	var baseUrl = 'https://restaurant.michelin.fr/restaurants/france/restaurants-1-etoile-michelin/restaurants-2-etoiles-michelin/restaurants-3-etoiles-michelin';
 	var restaurants = [];
-	var NumberOfPages = 3;
+	var NumberOfPages = 5;
 	var requestDone = 0;
 
 	let urls = [];
@@ -35,7 +40,7 @@ function launchScrapping(){
 			    $('.poi-search-result').find("li:not(.icon-mr)").each(function(i, element){
 
 			    	var url = $(this).children().find("a").attr("href");
-			    	url = "https://restaurants.michelin.fr" + url;
+			    	url = "https://restaurant.michelin.fr" + url;
 			    	urls.push(url);
 				});
 
@@ -43,54 +48,55 @@ function launchScrapping(){
 
 				if(requestDone >= NumberOfPages)
 				{		
-					console.log("All "+urls.length+" urls have been fetched.");		
-					console.log("Launching individual scrapping on 10 urls.");
-					urls = urls.slice(0, 10);
-					var debug = 0;
+					console.log(">>"+urls.length+" urls have been fetched.");		
+					console.log(">>Launching individual scrapping.");
+					//urls = urls.slice(0, 10);
 
 					Promise.all(urls.map((url) => {
-						console.log("Launching promises.");
 				        return new Promise((resolve, reject) => {
 				            request(url, function (err, resp, body) {
-				            	console.log("Request launched to url :"+url);
-				                if (err) {
-				                	console.log("error on "+url);
-				                	console.log(err);
-				                	return reject(err);
-				                }
+				                if (!err)
+				                {
+					                let $ = cheerio.load(body);
 
-				                let $ = cheerio.load(body);
+					                var name = "ISSOUS";
+					                var stars = 666;
+							    	var minPrice = 1;
+							    	var maxPrice = 99;
 
-				                var name = "ISSOUS"
-				                var stars = 666;
-						    	var minPrice = 1;
-						    	var maxPrice = 99;
-
-						    	var data = {
-						    		name : name,
-						    		stars : stars,
-						    		price : {
-						    			min : minPrice,
-						    			max : maxPrice
-						    		}
-						    	};
-						    	debug++;
-						    	console.log(debug);
-				                resolve(data);
+							    	var data = {
+							    		name : name,
+							    		stars : stars,
+							    		price : {
+							    			min : minPrice,
+							    			max : maxPrice
+							    		}
+							    	};
+					                resolve(data);
+					            }
+					            else resolve(null);
 				            }); // END REQUEST
 				        }); // END PROMISE
 				    }))//END MAP
 				    .then((result) => {
-				    	console.log("results are here : #############################");
-				        result.forEach(function (obj) {
-				            if (obj.name == null) {
-				                console.log(obj.url, "returned null");
-				            } else {
-				                console.log(obj);
+				    	console.log(">>Inserting "+result.length+" documents in DB.");
+				    	var inserted = 0;
+				    	var insertAttempt = 0;
+				        result.forEach((obj) => {
+				            if (obj !== null) {
+				                Restaurant.create(obj, (err, object) => {
+				                	if (!err) inserted++;
+
+				            		insertAttempt++;
+				                	if(insertAttempt === result.length){  		
+								        console.log(">>Inserted "+inserted+"/"+result.length+" documents in DB.");
+								        db.close();
+				                	}
+				                });
 				            }
 				        });// END FOREACH
 				    })//END THEN
-				    .catch((err) =>{
+				    .catch((err) => {
 				        console.log(err);
 				        db.close();
 				    });//END CATCH	
