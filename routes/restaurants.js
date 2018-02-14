@@ -7,6 +7,8 @@ router.get("/", (request, response) => {
 	Restaurant.find({}, (err, docs) => {
 		if(err) console.log("error find : "+err);
 	})
+	.limit(10)
+	.skip(20)
     .then((restaurants => {
 		response.render("restaurants/list.html", {restaurants : restaurants});
 	}))
