@@ -3,14 +3,25 @@
 {% block content %}
 
 	<h2>Liste des restaurants</h2>
-	<ul class="list-group">
 
 	{% for r in restaurants %}
-			<li class="list-group-item">
+		<div class="row py-3 my-3">
+			<div class="col-md-3">
 				{{r.name}}, {{r.stars}} stars, price from {{r.price.min}} to {{r.price.max}}.
-			</li>
+			</div>
+			<div class="col-md-9">
+				{{r.name}}, {{r.stars}} stars, price from {{r.price.min}} to {{r.price.max}}.
+			</div>
+		</div>
 	{% endfor %}
 
 	</ul>
+
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{previous}}">Previous</a></li>
+			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{next}}">Next</a></li>
+		</ul>
+	</nav>
 
 {% endblock %}
