@@ -3,19 +3,14 @@ var router = express.Router();
 
 var Restaurant = require("./../models/Restaurant");
 
-router.get("/", (request, response) => {
-	Restaurant.find({}, (err, docs) => {
-		if(err) console.log("error find : "+err);
-	})
-	.limit(10)
-	.skip(20)
-    .then((restaurants => {
-		response.render("restaurants/list.html", {restaurants : restaurants});
-	}))
-	.catch((e) => {
-		console.log("ERROR : ", e);
-	})
-});
+var homepageController = require('./../controllers/homepage.js');
+
+/**/
+/*
+/* HOMEPAGE
+/*
+/**/
+router.get("/", homepageController.homepage);
 
 
 module.exports = router;
