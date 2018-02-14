@@ -20,7 +20,7 @@ function launchScrapping(){
 	var count = 1;
 	var baseUrl = 'https://restaurant.michelin.fr/restaurants/france/restaurants-1-etoile-michelin/restaurants-2-etoiles-michelin/restaurants-3-etoiles-michelin';
 	var restaurants = [];
-	var NumberOfPages = 5;
+	var NumberOfPages = 2;
 	var requestDone = 0;
 
 	let urls = [];
@@ -50,7 +50,6 @@ function launchScrapping(){
 				{		
 					console.log(">>"+urls.length+" urls have been fetched.");		
 					console.log(">>Launching individual scrapping.");
-					//urls = urls.slice(0, 10);
 
 					Promise.all(urls.map((url) => {
 				        return new Promise((resolve, reject) => {
@@ -59,10 +58,46 @@ function launchScrapping(){
 				                {
 					                let $ = cheerio.load(body);
 
-					                var name = "ISSOUS";
-					                var stars = 666;
-							    	var minPrice = 1;
-							    	var maxPrice = 99;
+					                var name = $(".poi_intro-description > [itemprop=name]").text().trim();
+
+					                var address = $(".street-block > .thoroughfare").first().text().trim();
+					                var addressNumber = -1;
+					                try{
+					                	addressNumber = address.match(/\d+/)[0];
+					                }
+					                catch(e){}
+
+					                var addressStreet = address.replace(addressNumber, "").trim();
+
+					                var postcode = $(".locality-block > .postal-code").first().text().trim();
+					                var locality = $(".locality-block > .locality").first().text().trim();
+					                var country = $(".country").first().text().trim();
+
+					                var priceText = $(".poi_intro-display-prices").first().text().trim().split(" ");
+
+					                var minPrice = priceText[3];
+					                var maxPrice = priceText[6];
+
+					                console.log(minPrice);
+					                console.log(maxPrice);
+
+					                var starsClass = $(".poi_intro-display-guide").find("span").attr("class").split(" ")[2];
+					                var stars = -1;
+
+					                switch(starsClass){
+					                	case "icon-cotation1etoile":
+					                		stars = 1;
+					                		break;
+					                	case "icon-cotation2etoiles":
+					                		stars = 2;
+					                		break;
+					                	case "icon-cotation3etoiles":
+					                		stars = 3;
+					                		break;
+					                	default:
+					                		stars = -1;
+					                		break;
+					                }
 
 							    	var data = {
 							    		name : name,
@@ -70,7 +105,14 @@ function launchScrapping(){
 							    		price : {
 							    			min : minPrice,
 							    			max : maxPrice
-							    		}
+							    		},
+										address : {
+											street : addressStreet,
+											number : addressNumber,
+											country : country,
+											postcode : postcode,
+											locality : locality
+										}
 							    	};
 					                resolve(data);
 					            }
