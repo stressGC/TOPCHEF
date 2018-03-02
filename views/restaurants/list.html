@@ -6,11 +6,14 @@
 
 	{% for r in restaurants %}
 		<div class="row py-3 my-3">
-			<div class="col-md-3">
+			<div class="col-3">
+				<img src="{{r.image}}" class="img-fluid">
 				{{r.name}}, {{r.stars}} stars, price from {{r.price.min}} to {{r.price.max}}.
 			</div>
-			<div class="col-md-9">
-				{{r.name}}, {{r.stars}} stars, price from {{r.price.min}} to {{r.price.max}}.
+			<div class="col-9">
+				{% for p in r.promotions %}
+					<p>{{p.title}}</p>
+				{% endfor %}
 			</div>
 		</div>
 	{% endfor %}

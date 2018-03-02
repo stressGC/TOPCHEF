@@ -82,6 +82,8 @@ function launchScrapping(){
 									var locality = $(".locality-block > .locality").first().text().trim();
 									var country = $(".country").first().text().trim();
 
+									var image = $(".auto_image_style").first().attr("data-src");//"https://restaurant.michelin.fr/sites/mtpb2c_fr/files/styles/poi_detail_landscape/public/iISK-1u8sxhxOIPA.jpg?itok=0p1IVlLX";
+
 									var priceText = $(".poi_intro-display-prices").first().text().trim().split(" ");
 
 									var minPrice = priceText[3];
@@ -106,6 +108,7 @@ function launchScrapping(){
 									}
 
 									var data = {
+										image : image,
 										name : name,
 										fourchetteID : "",
 										stars : stars,

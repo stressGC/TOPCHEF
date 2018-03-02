@@ -4,6 +4,7 @@ var restaurantSchema = new mongoose.Schema({
 	name : String,
 	fourchetteID : Number,
 	stars : Number,
+	image : String,
 	price : {
 		min : Number,
 		max : Number
@@ -14,7 +15,8 @@ var restaurantSchema = new mongoose.Schema({
 		country : String,
 		postcode : String,
 		locality : String
-	}
+	},
+	promotions : []
 
 	/*,
 	types : [
