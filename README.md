@@ -2,6 +2,13 @@
 
 The project uses Node.js to scrap the michelin website, looking for french starred restaurants. Searches their corresponding LaFourchette promotions live and is used through a Node.js / MongoDB / Express / Nunjucks website.
 
+The Website is responsive.
+
+![alt text](https://raw.githubusercontent.com/stressGC/TOPCHEF/master/img/screen1.PNG)
+![alt text](https://raw.githubusercontent.com/stressGC/TOPCHEF/master/img/screen2.PNG)
+![alt text](https://raw.githubusercontent.com/stressGC/TOPCHEF/master/img/screen3.PNG)
+![alt text](https://raw.githubusercontent.com/stressGC/TOPCHEF/master/img/screen4.PNG)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
@@ -24,6 +31,10 @@ A step by step series of examples that tell you have to get a development enviro
 1) Fork or download the project via `github`
 
 2) Launch MongoDB
+```
+cd path/to/MongoDB
+mongod
+```
 
 3) Launch the scrapping script
 
