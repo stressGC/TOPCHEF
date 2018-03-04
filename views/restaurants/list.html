@@ -2,29 +2,55 @@
 
 {% block content %}
 
-	<h2>Liste des restaurants</h2>
-
+<div class="row my-2">
+	<div class="col-9">
+		<h1 class="ml-2">Liste des restaurants</h1>
+	</div>
+	<div class="col-3 float-right align-bottom">
+		<ul class="pagination">
+			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{previous}}&{{request}}">Previous</a></li>
+			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{next}}&{{request}}">Next</a></li>
+		</ul>
+	</div>
+</div>
+<div class="card-deck row">
 	{% for r in restaurants %}
-		<div class="row py-3 my-3">
-			<div class="col-3">
-				<img src="{{r.image}}" class="img-fluid">
-				{{r.name}}, {{r.stars}} stars, price from {{r.price.min}} to {{r.price.max}}.
-			</div>
-			<div class="col-9">
-				{% for p in r.promotions %}
-					<p>{{p.title}}</p>
-				{% endfor %}
-			</div>
-		</div>
+	<div class="col-3 mb-3">
+		  <div class="card h-100">
+		    <img class="card-img-top img-fluid" src="{{r.image}}" alt="{{r.name}} image" style="max-height: 300px">
+		    <div class="card-block pt-2">
+		      <h4 class="card-title px-2"><a href="http://localhost:3000/restaurant/{{r.name}}">{{r.name}}</a></h4>
+		      <p class="stars px-2">
+		      	{% for i in range(0, r.stars) -%}
+				<i class="far fa-star"></i>
+				{%- endfor %}
+				<p class="text-right">{{r.price.min}}-{{r.price.max}}€</p>
+		      </p>
+		      <p class="card-text px-2">
+		      	{{r.address.number}} {{r.address.street}}, {{r.address.postcode}} {{r.address.locality}}, {{r.address.country}}
+		      </p>
+		      	{% if r.promotions|length %}
+					{% for p in r.promotions %}
+					<p><span class="badge badge-default">{{p.title}}</span></p>
+					{% endfor %}
+				{% else %}
+					<p><span class="badge badge-default">Aucune promotion disponible.</span></p>
+				{% endif %}
+		      </p>
+		    </div>
+		  </div>
+	  </div>
 	{% endfor %}
 
-	</ul>
-
-	<nav aria-label="Page navigation">
+</div>
+<div class="row my-2">
+	<div class="col-9">
+	</div>
+	<div class="col-3 float-right">
 		<ul class="pagination">
-			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{previous}}">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{next}}">Next</a></li>
+			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{previous}}&{{request}}">Previous</a></li>
+			<li class="page-item"><a class="page-link" href="http://localhost:3000/?page={{next}}&{{request}}">Next</a></li>
 		</ul>
-	</nav>
-
+	</div>
+</div>
 {% endblock %}

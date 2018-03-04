@@ -2,17 +2,101 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title>Mon titre</title>
+		<title>Georges Cosson</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+		<link href="http://localhost:3000/css/custom.css" type="text/css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+		<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" type="text/css" rel="stylesheet">
 	</head>
-	<body>
-		<div class="container">
-			{% block content %}
-			{% endblock %}
-			<div class="text-center">
-				Copyright Georges Cosson
-			</div>
-		</div>
-	</body>
+    <body>
+
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div id="dismiss">
+                    <i class="fas fa-caret-square-left"></i>
+                </div>
+
+                <div class="sidebar-header">
+                    <h3>GCosson</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p class="text-uppercase font-weight-bold"></i> Filtres</p>
+                    <li>
+                        <a href="http://localhost:3000/?sort=stars"><i class="fas fa-star"></i> Etoiles</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:3000/?sort=name""><i class="fas fa-sort-alpha-down"></i> Alphabétique</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:3000/?sort=price.min"><i class="fas fa-euro-sign"></i> Prix</a>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    <li><a href="https://github.com/stressGC/TOPCHEF" class="github">Voir sur GitHub</a></li>
+                    <li><a href="https://github.com/92bondstreet/top-chef" class="consignes">Voir les consignes</a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="fas fa-bars"></i>
+                                <span>Menu</span>
+                            </button>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="lead">Made by <a href="https://github.com/stressGC/">Georges Cosson</a></p></li>
+                        </ul>
+                    </div>
+                </nav>
+
+				{% block content %}
+				{% endblock %}
+                
+            </div>
+        </div>
+
+
+
+        <div class="overlay"></div>
+
+
+        <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#dismiss, .overlay').on('click', function () {
+                    $('#sidebar').removeClass('active');
+                    $('.overlay').fadeOut();
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').addClass('active');
+                    $('.overlay').fadeIn();
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
+        </script>
+    </body>
 </html>
+

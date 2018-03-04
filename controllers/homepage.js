@@ -1,7 +1,7 @@
 var Restaurant = require("./../models/Restaurant");
 var request = require("request");
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 12;
 const LA_FOURCHETTE_API_URL = "https://m.lafourchette.com/api/restaurant/";
 
 var homepage =  (req, response) => {
@@ -10,20 +10,29 @@ var homepage =  (req, response) => {
 	var offset = 0;
 	var page = 0;
 
+	var sort = { 
+				stars : -1,
+				name : 1
+			}
+
+	if(query.hasOwnProperty("sort")){
+
+		sort = query.sort;
+	}
+
 	if(query.hasOwnProperty("page")){
 		page = Number(query.page);
-		offset = page * ITEMS_PER_PAGE;
+
+		if(page >= 0) offset = page * ITEMS_PER_PAGE;
 	}
 	var max = offset + ITEMS_PER_PAGE;
-	//console.log("displaying results from "+offset+" to "+ max);
+
+	console.log(sort);
 
 	Restaurant.find({}, (err, docs) => {
 		if(err) console.log("error find : "+err);
 	})
-	.sort({
-		stars : -1,
-		name : 1
-		})	
+	.sort(sort)	
 	.limit(ITEMS_PER_PAGE)
 	.skip(offset)
     .then((restaurants) => {
@@ -68,7 +77,8 @@ var homepage =  (req, response) => {
 									restaurants : restaurants,
 									page : page,
 									previous : page - 1,
-									next : page + 1
+									next : page + 1,
+									request : "sort="+sort
 								});
     		})
     		.catch((e) => {

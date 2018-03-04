@@ -10,8 +10,11 @@ require("./models/Restaurant");
 
 var app = express();
 
-app.use("/css", express.static(__dirname + "/node_modules/bootstrap/dist/css"));
-app.use("/", require("./routes/restaurants"));
+app.use("/dist", express.static(__dirname + "/node_modules/bootstrap/dist/css"));
+app.use("/css", express.static(__dirname + "/css"));
+
+app.use("/", require("./routes/homepage"));
+app.use("/:name", require("./routes/restaurant"));
 
 nunjucks.configure("views", {
 	autoescape : true,

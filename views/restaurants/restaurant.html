@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mt-5">
+	<div class="col-md-8 pl-4">
+		<h1>{{restaurant.name}}
+			<span class="stars">
+				{% for i in range(0, restaurant.stars) -%}
+				<i class="far fa-star"></i>
+				{%- endfor %}
+			</span>
+		</h1>
+		<p class="lead">
+			De {{restaurant.price.min}} à {{restaurant.price.max}}€
+		</p>
+		<img class="img-fluid rounded" src="{{restaurant.image}}" alt="{{restaurant.name}} image" style="max-height:350px">
+		<p class="lead">
+			{{restaurant.address.number}} {{restaurant.address.street}}, {{restaurant.address.postcode}} {{restaurant.address.locality}}, {{restaurant.address.country}}
+		</p>
+	</div>
+	<div class="col-md-4 pr-3">
+		{% if r.promotions|length %}
+			{% for p in restaurant.promotions %}
+			<p>{{p.title}}</p>
+			{% endfor %}
+		{% else %}
+			Aucune promotion disponible.
+		{% endif %}
+		<a href="{{reservationUrl}}" class="btn btn-lg navbar-btn btn-info white">
+			Réserver
+		</a>
+	</div>
+</div>
+
+{% endblock %}

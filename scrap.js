@@ -190,7 +190,7 @@ function fetchIDsFromLaFourchette(restaurants)
 						fourchetteID : ""
 					});
 				} 
-				            }); // END REQUEST
+				   }); // END REQUEST
 
 		        }); // END PROMISE
 		    }))//END MAP
