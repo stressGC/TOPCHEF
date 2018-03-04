@@ -1,5 +1,27 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+.stylish-input-group > *{
+    border-radius : 2px;
+    border : 1px solid white;
+    background-color: transparent !important;
+}
+.stylish-input-group .form-control{
+    box-shadow:0 0 0; 
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+    color : white;
+}
+.stylish-input-group > input{
+    color : white !important;
+    font-weight: 600;
+}
+.stylish-input-group > input::placeholder{
+    color:white;
+    font-weight: 600;
+}
+
 .stars {
     color: #17a2b8;
     font-size: 80%;

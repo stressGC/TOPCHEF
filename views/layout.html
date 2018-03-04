@@ -23,6 +23,20 @@
                 </div>
 
                 <ul class="list-unstyled components">
+                    <p class="text-uppercase font-weight-bold"></i> Recherche</p>
+                    <li class="px-1">
+                        <div class="input-group stylish-input-group">
+                            <input type="text" class="form-control" id="query" placeholder="Rechercher" onkeypress="enter(event)">
+                            <span class="input-group-addon">
+                                <button type="submit" onclick="search();">
+                                    <span class="fas fa-search"></span>
+                                </button>  
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled components">
                     <p class="text-uppercase font-weight-bold"></i> Filtres</p>
                     <li>
                         <a href="http://localhost:3000/?sort=stars"><i class="fas fa-star"></i> Etoiles</a>
@@ -45,18 +59,18 @@
             <div id="content">
 
                 <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-
-                        <div class="navbar-header">
-                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                                <i class="fas fa-bars"></i>
-                                <span>Menu</span>
-                            </button>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="navbar-header float-left">
+                                <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                    <i class="fas fa-bars"></i>
+                                    <span>Menu</span>
+                                </button>
+                            </div>
                         </div>
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><p class="lead">Made by <a href="https://github.com/stressGC/">Georges Cosson</a></p></li>
-                        </ul>
+                        <div class="col-6">
+                            <p class="text-right lead">Made by <a href="https://github.com/stressGC/">Georges Cosson</a></p>
+                        </div>
                     </div>
                 </nav>
 
@@ -96,6 +110,22 @@
                     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
                 });
             });
+
+            function search(){
+                const BASE_URL = "http://localhost:3000/restaurant/";
+                var query = document.getElementById("query").value;
+
+                if(query.length){
+                    window.location.replace(BASE_URL+query);
+                }
+            }
+
+            function enter(e){
+                if(e.keyCode == 13)
+                {
+                    search();
+                }
+            }
         </script>
     </body>
 </html>
