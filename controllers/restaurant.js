@@ -23,7 +23,6 @@ var restaurant =  (req, response) => {
 					result.address.number = null;
 				}
 
-				console.log(result);
 				response.render(
 					"restaurants/restaurant.html", 
 					{
