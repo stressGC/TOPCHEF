@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <div class="row my-2">
 	<div class="col-9">
 		<h1 class="ml-2">Liste des restaurants</h1>
@@ -15,7 +14,7 @@
 </div>
 <div class="card-deck row">
 	{% for r in restaurants %}
-	<div class="col-3 mb-3">
+	<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
 		  <div class="card h-100">
 		    <img class="card-img-top img-fluid" src="{{r.image}}" alt="{{r.name}} image" style="max-height: 300px">
 		    <div class="card-block pt-2">

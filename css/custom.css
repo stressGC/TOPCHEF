@@ -21,7 +21,9 @@
     color:white;
     font-weight: 600;
 }
-
+.stylish-input-group > input:focus{
+    border-color: white !important;
+}
 .stars {
     color: #17a2b8;
     font-size: 80%;
